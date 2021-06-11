@@ -1,9 +1,4 @@
 {
-    "python.linting.flake8Args": [
-        "--max-line-length=88",
-        "--extend-ignore=E203",
-        "--docstring-style=sphinx"
-    ],
     "python.linting.pylintEnabled": false,
     "python.linting.flake8Enabled": true,
     "python.linting.enabled": true,

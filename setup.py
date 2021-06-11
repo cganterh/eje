@@ -1,7 +1,7 @@
 """Setup file for eje."""
 
 
-from setuptools import setup
+from setuptools import setup  # type: ignore
 
 
 setup(

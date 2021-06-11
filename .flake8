@@ -1,0 +1,14 @@
+[flake8]
+docstring-style=sphinx
+extend-ignore=E203
+max-line-length=88
+
+exclude=
+    .eggs
+    .git
+    .github
+    .mypy_cache
+    .pytest_cache
+    .vscode
+    *.egg-info
+    venv

@@ -6,12 +6,15 @@ name: Python application
 on:
   push:
     branches: [ main ]
+
   pull_request:
     branches: [ main ]
+  
+  release:
+    types: [published]
 
 jobs:
-  build:
-
+  setup:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,15 +34,27 @@ jobs:
         pip install pip-tools
         pip-sync
 
+  test:
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Test with pytest
       run: |
         flake8 .
         pytest --mypy
 
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Build distributions
       run: |
         python setup.py sdist bdist_wheel
 
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
     - name: Deploy to PyPI
       env:
         PYPI_USER: ${{ secrets.PYPI_USER }}

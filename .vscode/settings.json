@@ -19,8 +19,14 @@
     "cSpell.words": [
         "Crist",
         "Cristóbal",
+        "PYPI",
         "bal",
-        "cysystemd"
+        "bdist",
+        "cysystemd",
+        "mypy",
+        "pytest",
+        "sdist",
+        "unshallow"
     ],
     "files.watcherExclude": {
         ".git": true,

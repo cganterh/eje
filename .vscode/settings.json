@@ -1,0 +1,36 @@
+{
+    "python.linting.flake8Args": [
+        "--max-line-length=88",
+        "--extend-ignore=E203",
+        "--docstring-style=sphinx"
+    ],
+    "python.linting.pylintEnabled": false,
+    "python.linting.flake8Enabled": true,
+    "python.linting.enabled": true,
+    "python.pythonPath": "venv/bin/python",
+    "files.exclude": {
+        ".eggs": true,
+        "*.egg-info": true,
+        "**/__pycache__": true,
+        "venv": true
+    },
+    "[python]": {
+        "editor.rulers": [
+            72,
+            88
+        ]
+    },
+    "python.formatting.provider": "black",
+    "cSpell.words": [
+        "Crist",
+        "Cristóbal",
+        "bal",
+        "cysystemd"
+    ],
+    "files.watcherExclude": {
+        ".git": true,
+        "**/__pycache__": true,
+        "**/*.egg-info": true,
+        "venv": true
+    }
+}

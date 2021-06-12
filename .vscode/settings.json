@@ -23,9 +23,13 @@
         "bal",
         "bdist",
         "cysystemd",
+        "fileno",
+        "gaierror",
         "mypy",
+        "noqa",
         "pytest",
         "sdist",
+        "tcpserver",
         "unshallow"
     ],
     "files.watcherExclude": {

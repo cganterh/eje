@@ -12,3 +12,27 @@ exclude=
     .vscode
     *.egg-info
     venv
+
+rst-roles =
+    attr,
+    class,
+    func,
+    meth,
+    mod,
+    obj,
+    ref,
+    term
+
+rst-directives =
+    autosummary,
+    currentmodule,
+    data,
+    deprecated,
+    envvar,
+    exception,
+    glossary,
+    moduleauthor,
+    plot,
+    testcode,
+    versionadded,
+    versionchanged

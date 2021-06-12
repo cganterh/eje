@@ -5,6 +5,8 @@
     "python.pythonPath": "venv/bin/python",
     "files.exclude": {
         ".eggs": true,
+        ".mypy_cache": true,
+        ".pytest_cache": true,
         "*.egg-info": true,
         "**/__pycache__": true,
         "venv": true

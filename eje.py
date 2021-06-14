@@ -3,6 +3,7 @@
 
 import ssl as _ssl
 
+from asyncio import get_event_loop as _get_event_loop
 from logging import getLogger as _get_logger  # noqa: N813
 
 from socket import (  # noqa: N812
@@ -57,6 +58,7 @@ def _make_ssl_context(certificate_path, private_key_path):
 
 def start_server(
     app: Application,
+    app_name: str = "Server",
     port: Optional[int] = None,
     certificate_path=None,
     private_key_path=None,
@@ -64,9 +66,13 @@ def start_server(
     """Start a server to serve an app at the specified port.
 
     :param app: A :class:`tornado.web.Application` instance.
+    :param app_name: The name of the application.
+    :param port: The port where the application will be listening on.
 
-    :param port:
-        A port number where the server will listen for connections.
+    :param certificate_path:
+        Path to the public TLS certificate of the application.
+
+    :param private_key_path: Path to the application private TLS key.
 
     :raises GAIError:  # noqa: DAR402
         if there is a problem listening to the specified port.
@@ -77,3 +83,11 @@ def start_server(
 
     ports = [s.getsockname()[1] for s in server._sockets.values()]
     _LOGGER.info("Listening on %s", ports)
+
+    try:
+        loop = _get_event_loop()
+        loop.call_soon(_LOGGER.info, "%s started!", app_name)
+        loop.run_forever()
+
+    except KeyboardInterrupt:
+        _LOGGER.info("%s stopped.", app_name)

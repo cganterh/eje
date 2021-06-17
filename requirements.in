@@ -1,5 +1,6 @@
 -e file:.
 black
+types-pkg_resources
 darglint
 Dlint
 flake8

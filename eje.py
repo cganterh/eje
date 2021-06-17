@@ -11,12 +11,21 @@ from socket import (  # noqa: N812
     socket as _Socket,
 )
 
-from typing import Optional
+from typing import (
+    Any,
+    Optional,
+)
 
 
+from pkg_resources import resource_filename as _resource_filename
+from tornado.concurrent import Future
 from tornado.httpserver import HTTPServer as _HTTPServer
 from tornado.tcpserver import TCPServer
-from tornado.web import Application
+
+from tornado.web import (
+    Application,
+    RequestHandler as _RequestHandler,
+)
 
 
 _LOGGER = _get_logger(__name__)
@@ -91,3 +100,22 @@ def start_server(
 
     except KeyboardInterrupt:
         _LOGGER.info("%s stopped.", app_name)
+
+
+class RenderFromModuleHandler(_RequestHandler):
+    """Provides a render method that picks up templates from modules."""
+
+    def render_from_module(
+        self, module_name, template_name: str, **kwargs: Any
+    ) -> "Future[None]":
+        """Render a template from a module.
+
+        :param module_name:
+            Name of the module from which to render the template.
+
+        :param template_name: File name of the template to render.
+        :param kwargs: Keyword arguments to be passed to the template.
+        :return: ``None`` wrapped in a future.
+        """
+        template_path = _resource_filename(module_name, template_name)
+        return self.render(template_path, **kwargs)

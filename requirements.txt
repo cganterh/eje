@@ -248,6 +248,8 @@ tqdm==4.61.0
     # via twine
 twine==3.4.1
     # via -r requirements.in
+types-pkg-resources==0.1.2
+    # via -r requirements.in
 typing-extensions==3.10.0.0
     # via mypy
 urllib3==1.26.5

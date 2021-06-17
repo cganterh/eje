@@ -1,6 +1,14 @@
 -e file:.
+
 black
+hypothesis
+mypy
+rope
+twine
 types-pkg_resources
+wheel
+
+# flake8 and plugins
 darglint
 Dlint
 flake8
@@ -24,13 +32,10 @@ flake8-rst
 flake8-rst-docstrings
 flake8-simplify
 flake8-variables-names
-hypothesis
-mypy
 pep8-naming
+
+# pytest and names
 pytest
 pytest-cov
 pytest-flake8
 pytest-mypy
-rope
-twine
-wheel

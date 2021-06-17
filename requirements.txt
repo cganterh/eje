@@ -43,8 +43,6 @@ coverage==5.5
     # via pytest-cov
 cryptography==3.4.7
     # via secretstorage
-cysystemd==1.4.8
-    # via eje
 darglint==1.8.0
     # via -r requirements.in
 dlint==0.11.0

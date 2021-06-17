@@ -20,7 +20,7 @@ from typing import (
 from pkg_resources import resource_filename as _resource_filename
 from tornado.concurrent import Future
 from tornado.httpserver import HTTPServer as _HTTPServer
-from tornado.tcpserver import TCPServer
+from tornado.tcpserver import TCPServer as _TCPServer
 
 from tornado.web import (
     Application,
@@ -31,7 +31,7 @@ from tornado.web import (
 _LOGGER = _get_logger(__name__)
 
 
-def _bind_to_managed_port(server: TCPServer):
+def _bind_to_managed_port(server: _TCPServer):
     try:
         systemd_socket = _Socket(fileno=3)
 
@@ -43,7 +43,7 @@ def _bind_to_managed_port(server: TCPServer):
         server.add_socket(systemd_socket)
 
 
-def _listen_to(server: TCPServer, port=None):
+def _listen_to(server: _TCPServer, port=None):
     try:
         server.listen(port)
 

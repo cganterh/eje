@@ -34,13 +34,11 @@ _LOGGER = _get_logger(__name__)
 def _bind_to_managed_port(server: _TCPServer):
     try:
         systemd_socket = _Socket(fileno=3)
+        systemd_socket.setblocking(False)
+        server.add_socket(systemd_socket)
 
     except OSError:
         server.listen(0)
-
-    else:
-        systemd_socket.setblocking(False)
-        server.add_socket(systemd_socket)
 
 
 def _listen_to(server: _TCPServer, port=None):

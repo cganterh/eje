@@ -31,28 +31,6 @@ from tornado.web import (
 _LOGGER = _get_logger(__name__)
 
 
-def _bind_to_managed_port(server: _TCPServer):
-    try:
-        systemd_socket = _Socket(fileno=3)
-        systemd_socket.setblocking(False)
-        server.add_socket(systemd_socket)
-
-    except OSError:
-        server.listen(0)
-
-
-def _listen_to(server: _TCPServer, port=None):
-    try:
-        server.listen(port)
-
-    except GAIError:
-        if port is None:  # noqa: SIM106
-            _bind_to_managed_port(server)
-
-        else:
-            raise
-
-
 def _make_ssl_context(certificate_path, private_key_path):
     if certificate_path is None or private_key_path is None:
         return None
@@ -69,6 +47,7 @@ def start_server(
     port: Optional[int] = None,
     certificate_path=None,
     private_key_path=None,
+    setup_systemd_socket=False,
 ):
     """Start a server to serve an app at the specified port.
 
@@ -86,7 +65,17 @@ def start_server(
     """
     ssl_context = _make_ssl_context(certificate_path, private_key_path)
     server = _HTTPServer(app, ssl_options=ssl_context)
-    _listen_to(server, port)
+
+    if setup_systemd_socket:
+        systemd_socket = _Socket(fileno=3)
+        systemd_socket.setblocking(False)
+        server.add_socket(systemd_socket)
+
+    elif port == None:
+        server.listen(0)
+
+    else:
+        server.listen(port)
 
     ports = [s.getsockname()[1] for s in server._sockets.values()]
     _LOGGER.info("Listening on %s", ports)

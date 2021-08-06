@@ -7,7 +7,6 @@ from asyncio import get_event_loop as _get_event_loop
 from logging import getLogger as _get_logger  # noqa: N813
 
 from socket import (  # noqa: N812
-    gaierror as GAIError,
     socket as _Socket,
 )
 
@@ -20,7 +19,6 @@ from typing import (
 from pkg_resources import resource_filename as _resource_filename
 from tornado.concurrent import Future
 from tornado.httpserver import HTTPServer as _HTTPServer
-from tornado.tcpserver import TCPServer as _TCPServer
 
 from tornado.web import (
     Application,
@@ -60,8 +58,8 @@ def start_server(
 
     :param private_key_path: Path to the application private TLS key.
 
-    :raises GAIError:  # noqa: DAR402
-        if there is a problem listening to the specified port.
+    :param setup_systemd_socket:
+        If ``True`` try to bind the server to a systemd managed socket.
     """
     ssl_context = _make_ssl_context(certificate_path, private_key_path)
     server = _HTTPServer(app, ssl_options=ssl_context)
@@ -71,7 +69,7 @@ def start_server(
         systemd_socket.setblocking(False)
         server.add_socket(systemd_socket)
 
-    elif port == None:
+    elif port is None:
         server.listen(0)
 
     else:
